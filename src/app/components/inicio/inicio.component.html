@@ -1,0 +1,81 @@
+<p></p>
+<p-dialog [header]="'Plantilla de desarrollo para proyectos DTIC UPTC' " [(visible)]="displayWelcome" modal="true" [style]="{width: '60vw'}">
+    Bienvenido a la plantilla de desarrollo para los futuros proyectos DTIC basada en Angular 18.0.1
+</p-dialog>
+
+
+<div class="card">
+<h6 style="text-align: center;">Sistema de información para el prestamo de libros</h6>
+    <div class="card" *ngIf="userIsAdmin; else elseAdmin">
+        Es administrador, por lo que puede ver los prestamos actuales<br><br>
+
+
+        <p-table selectionMode="single" styleClass="p-datatable-gridlines" [loading]="loading" [value]="prestamos" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Autor</th>
+                    <th>Año</th>
+                    <th>DNI del lector</th>
+                    <th>Fecha Prestamo</th>
+                    <th>Fecha Devolucion</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-prestamos>
+                <tr>
+                    <td>{{prestamos.idPrestamo}}</td>
+                    <td>{{prestamos.libro.autor.nombre}}</td>
+                    <td>{{prestamos.libro.anio}}</td>
+                    <td>{{prestamos.dniUsuario.dni}}</td>
+                    <td>{{prestamos.fechaPrestamo | date:'dd/MM/yyyy hh:mm a'}}</td>
+                    <td>{{prestamos.fechaDevolucion | date:'dd/MM/yyyy hh:mm a'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+    <ng-template #elseAdmin>
+        <div class="card">
+        No tiene permisos de administrador, por lo que solo puede ver los libros<br><br>
+
+        <p-table selectionMode="single" styleClass="p-datatable-gridlines" [loading]="loading" [value]="libros" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Año</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-libros>
+                <tr>
+                    <td>{{libros.titulo}}</td>
+                    <td>{{libros.autor.nombre}} {{libros.autor.apellido}}</td>
+                    <td>{{libros.anio}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+    </ng-template>
+    <br>
+    Tabla en la que se carga el primer Tercero:
+    <div class="col-12 md:col-12">
+        <p-table selectionMode="single"  styleClass="p-datatable-gridlines" [value]="terceroDataList" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr style="background-color:antiquewhite;">
+                    <th style="background-color: rgb(180, 245, 180);">Nombres</th>
+                    <th style="background-color: rgb(180, 245, 180); width: 20%;">Apellidos</th>
+                    <th style="background-color: rgb(180, 245, 180); width: 20%;">Fecha Nacimiento</th>
+                    <th style="background-color: rgb(180, 245, 180); width: 20%;">Email UPTC</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tercero>
+                <tr>
+                    <td>{{tercero.primerNombre}} {{tercero.otrosNombres}}</td>
+                    <td>{{tercero.primerApellido}} {{tercero.segundoApellido}}</td>
+                    <td>{{tercero.fechaNacimiento}}</td>
+                    <td>{{tercero.emailUptc}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
