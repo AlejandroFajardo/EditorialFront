@@ -1,0 +1,39 @@
+
+.card {
+  box-shadow: 0 2px 24px 0 rgba(31, 41, 55, 0.12);
+  border-radius: 18px;
+  background: #fff;
+}
+
+h4 {
+  text-align: center;
+  margin-bottom: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #384a5e;
+}
+
+.field label {
+  font-weight: 500;
+  color: #2d4052;
+}
+
+input.p-inputtext, .p-dropdown {
+  border-radius: 8px;
+}
+
+small {
+  color: #d93025;
+}
+
+.p-inputgroup {
+  align-items: center;
+}
+
+button[icon="pi pi-minus"] {
+  margin-left: 6px;
+}
+
+button[icon="pi pi-plus"] {
+  margin-top: 4px;
+}

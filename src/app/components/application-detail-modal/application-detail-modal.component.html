@@ -1,0 +1,120 @@
+<p-dialog 
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="false"
+  (onHide)="onClose()"
+  [style]="{width: '600px', maxWidth: '90vw'}"
+>
+
+  <!-- HEADER: Título del libro -->
+  <ng-template pTemplate="header">
+    <div class="modal-title">
+      {{ application?.bookTitle || 'Detalles de la Solicitud' }}
+    </div>
+  </ng-template>
+
+  <!-- BODY -->
+  <ng-container *ngIf="loading">
+    <div class="loading-modal">
+      <div class="spinner"></div>
+      <p>Cargando detalles...</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && errorMessage">
+    <p class="text-danger">{{ errorMessage }}</p>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && application">
+    <!-- Línea con autor • editorial • año -->
+    <div class="info-line mb-3">
+      <span>{{ application.authorName }}</span>
+      <span class="separator">•</span>
+      <span>{{ application.publisher }}</span>
+      <span class="separator">•</span>
+      <span>{{ application.publicationYear }}</span>
+    </div>
+
+    <!-- Tabla de datos -->
+    <table class="info-table">
+      <tr>
+        <td><strong>Email del centro:</strong></td>
+        <td>{{ application.centerEmail }}</td>
+      </tr>
+      <tr>
+        <td><strong>Ciudad/País:</strong></td>
+        <td>{{ application.publicationLocation }}</td>
+      </tr>
+      <tr>
+        <td><strong>Tipo de certificación:</strong></td>
+        <td>{{ application.certificationType }}</td>
+      </tr>
+      <tr>
+        <td><strong>ISBN:</strong></td>
+        <td>{{ application.isbnCode }}</td>
+      </tr>
+      <tr>
+        <td><strong>Editorial (URL):</strong></td>
+        <td>
+          <a [href]="application.publisherWebsiteUrl" target="_blank">
+            {{ application.publisherWebsiteUrl }}
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Manuscrito:</strong></td>
+        <td>
+          <a [href]="application.manuscriptUrl" target="_blank">
+            Ver Manuscrito
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Certificación:</strong></td>
+        <td>
+          <a [href]="application.certificationFormUrl" target="_blank">
+            Ver Certificación
+          </a>
+        </td>
+      </tr>
+    </table>
+    <!-- Documentos adicionales si existen 
+    <div class="extra-docs" *ngIf="application.extraDocumentUrls?.length">
+      <strong>Documentos adicionales:</strong>
+      <ul>
+        <li *ngFor="let url of application.extraDocumentUrls">
+          <a [href]="url" target="_blank">{{ url }}</a>
+        </li>
+      </ul>
+    </div>-->
+    <!-- Estado -->
+    <div class="status-badge mt-2">
+      Estado actual: <span [ngClass]="application.status">{{ traducirEstado(application.status) }}</span>
+    </div>
+  </ng-container>
+
+  <!-- FOOTER: Botones -->
+  <ng-template pTemplate="footer">
+    <div *ngIf="!loading && application" class="modal-actions">
+      <button pButton 
+        label="Aprobar" 
+        class="p-button-success"
+        (click)="aprobar()"
+        [disabled]="isFinalState() || actionLoading"
+      ></button>
+      <button pButton 
+        label="Rechazar" 
+        class="p-button-danger"
+        (click)="rechazar()"
+        [disabled]="isFinalState() || actionLoading"
+      ></button>
+      <button pButton 
+        label="Cerrar" 
+        class="p-button-secondary"
+        (click)="onClose()"
+        [disabled]="actionLoading"
+      ></button>
+      <span *ngIf="actionLoading" class="ml-2">Procesando...</span>
+    </div>
+  </ng-template>
+</p-dialog>

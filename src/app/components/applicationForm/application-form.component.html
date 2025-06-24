@@ -1,0 +1,112 @@
+<div class="card p-fluid" style="max-width: 850px; margin: 0 auto;">
+  <h4 class="mb-3">Registrar nueva solicitud</h4>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="p-formgrid grid">
+
+      <!-- Email y Autor (misma fila) -->
+      <div class="field col-12 md:col-6">
+        <label for="centerEmail">Email institucional del centro *</label>
+        <input pInputText id="centerEmail" formControlName="centerEmail" />
+        <small *ngIf="form.controls.centerEmail.touched && form.controls.centerEmail.invalid">
+          Ingresa un correo válido.
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="authorName">Autor *</label>
+        <input pInputText id="authorName" formControlName="authorName" />
+        <small *ngIf="form.controls.authorName.touched && form.controls.authorName.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <!-- Tipo de certificación y Título (misma fila) -->
+      <div class="field col-12 md:col-6">
+        <label for="certificationType">Tipo de certificación *</label>
+        <p-dropdown [options]="certificationOptions"
+                    formControlName="certificationType"
+                    placeholder="Seleccione"></p-dropdown>
+        <small *ngIf="form.controls.certificationType.touched && form.controls.certificationType.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="bookTitle">Título del libro *</label>
+        <input pInputText id="bookTitle" formControlName="bookTitle" />
+        <small *ngIf="form.controls.bookTitle.touched && form.controls.bookTitle.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <!-- ISBN, Año, Ciudad/País (misma fila) -->
+      <div class="field col-12 md:col-4">
+        <label for="isbnCode">ISBN</label>
+        <input pInputText id="isbnCode" formControlName="isbnCode" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="publicationYear">Año publicación *</label>
+        <input pInputText id="publicationYear" formControlName="publicationYear" type="number" />
+        <small *ngIf="form.controls.publicationYear.touched && form.controls.publicationYear.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="publicationLocation">Ciudad/País *</label>
+        <input pInputText id="publicationLocation" formControlName="publicationLocation" />
+        <small *ngIf="form.controls.publicationLocation.touched && form.controls.publicationLocation.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <!-- Editorial y URL editorial (misma fila) -->
+      <div class="field col-12 md:col-6">
+        <label for="publisher">Editorial *</label>
+        <input pInputText id="publisher" formControlName="publisher" />
+        <small *ngIf="form.controls.publisher.touched && form.controls.publisher.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="publisherWebsiteUrl">URL de la editorial</label>
+        <input pInputText id="publisherWebsiteUrl" formControlName="publisherWebsiteUrl" />
+      </div>
+
+      <!-- Manuscrito y Certificación (misma fila) -->
+      <div class="field col-12 md:col-6">
+        <label for="manuscriptUrl">URL manuscrito *</label>
+        <input pInputText id="manuscriptUrl" formControlName="manuscriptUrl" />
+        <small *ngIf="form.controls.manuscriptUrl.touched && form.controls.manuscriptUrl.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="certificationFormUrl">URL formato certificación *</label>
+        <input pInputText id="certificationFormUrl" formControlName="certificationFormUrl" />
+        <small *ngIf="form.controls.certificationFormUrl.touched && form.controls.certificationFormUrl.invalid">
+          Campo obligatorio.
+        </small>
+      </div>
+
+      <!-- Extra URLs dinámicas (fila completa) -->
+      <div class="field col-12">
+        <label>URLs adicionales *</label>
+        <div formArrayName="extraDocumentUrls">
+          <div *ngFor="let ctrl of extraDocs.controls; let i = index" class="p-inputgroup mb-2">
+            <input pInputText [formControlName]="i" placeholder="URL documento extra" />
+            <button pButton type="button" icon="pi pi-minus" class="p-button-danger" (click)="removeExtraDoc(i)"></button>
+          </div>
+        </div>
+        <button pButton type="button" icon="pi pi-plus" label="Agregar URL extra" (click)="addExtraDoc()"></button>
+      </div>
+
+      <div class="field col-12 mt-3">
+        <button pButton type="submit" label="Enviar" [disabled]="form.invalid"></button>
+      </div>
+    </div>
+  </form>
+</div>

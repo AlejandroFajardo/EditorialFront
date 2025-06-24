@@ -1,0 +1,33 @@
+.card {
+  box-shadow: 0 2px 24px 0 rgba(31, 41, 55, 0.11);
+  border-radius: 18px;
+  background: #fff;
+  padding: 2.2rem 2.4rem 2.1rem 2.4rem;
+  margin-bottom: 32px;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #384a5e;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+
+.p-table th, .p-table td {
+  font-size: 1rem;
+}
+
+.field label {
+  font-weight: 500;
+  color: #384a5e;
+}
+
+select.p-inputtext {
+  min-width: 200px;
+  border-radius: 8px;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}

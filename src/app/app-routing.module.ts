@@ -8,6 +8,8 @@ import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import { AuthGuard } from './core/guard/app-auth-guard';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { ApplicationFormComponent } from './components/applicationForm/application-form.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
     imports: [
@@ -15,10 +17,21 @@ import { InicioComponent } from './components/inicio/inicio.component';
             {
                 path: '', component: AppMainComponent,
                 children: [
-                    {path: '', component: InicioComponent,canActivate: [AuthGuard]},
+                    {path: 'tabla', component: InicioComponent,canActivate: [AuthGuard]},
+                    { 
+                        path: 'ejemplo', 
+                        component: FormLayoutDemoComponent, 
+                        canActivate: [AuthGuard],
+                        data: { roles: ['backendUser'] } 
+                    },
                     { 
                         path: 'ejemplos/form', 
-                        component: FormLayoutDemoComponent, 
+                        component: ApplicationFormComponent, 
+                        data: { roles: ['backendUser'] } 
+                    },
+                     { 
+                        path: '', 
+                        component: AdminDashboardComponent, 
                         canActivate: [AuthGuard],
                         data: { roles: ['backendUser'] } 
                     },

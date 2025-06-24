@@ -1,3 +1,9 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { ApplicationFormComponent } from './components/applicationForm/application-form.component';
+
+
 import {ApplicationConfig, NgModule, Provider} from '@angular/core';
 import { APP_INITIALIZER} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
@@ -40,6 +46,9 @@ import { KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService } fro
 import { FormLayoutDemoComponent } from './components/formDemo/formlayoutdemo.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { AuthenticationInterceptor } from 'src/AuthenticationInterceptor';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { ApplicationDetailModalComponent } from './components/application-detail-modal/application-detail-modal.component';
+
 
 
 export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boolean> {
@@ -58,6 +67,11 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
 
 @NgModule({
     imports: [
+       BrowserModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        DropdownModule,
+        ButtonModule,
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -68,7 +82,7 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
         InputTextModule,
         InputTextareaModule,
         KeycloakAngularModule,
-		CoreModule,
+		    CoreModule,
         MenubarModule,
         PaginatorModule,
         PanelModule,
@@ -85,6 +99,7 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
         AppMenuComponent,
         AppMenuitemComponent,
         AppBreadcrumbComponent,
+        ApplicationFormComponent,
         AppTopBarComponent,
         AppFooterComponent,
         AppNotfoundComponent,
@@ -92,6 +107,8 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
         AppAccessdeniedComponent,
         FormLayoutDemoComponent,
         InicioComponent,
+        AdminDashboardComponent,
+        ApplicationDetailModalComponent
     ],
     providers: [
 

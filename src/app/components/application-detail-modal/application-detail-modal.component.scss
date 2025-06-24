@@ -1,0 +1,119 @@
+// Fondo y tarjeta principal del modal
+.info-card {
+  background: #f8fafc;
+  border-radius: 20px;
+  box-shadow: 0 4px 32px 0 rgba(31, 41, 55, 0.10), 0 1.5px 5px 0 rgba(80, 80, 80, 0.06);
+  padding: 30px 28px 18px 28px;
+  margin: 0 auto;
+  max-width: 530px;
+}
+
+// Título centrado y grande
+.modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 6px;
+  width: 100%;
+  letter-spacing: 0.5px;
+  color: #273c75;
+}
+
+// Línea superior: autor, editorial, año
+.info-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.18rem;
+  font-weight: 500;
+  color: #53627c;
+  gap: 12px;
+}
+
+.info-item {
+  padding: 0 6px;
+}
+
+.separator {
+  font-size: 1.3rem;
+  color: #a6b1c3;
+}
+
+.info-table {
+  width: 100%;
+  margin: 16px 0 6px 0;
+  border-collapse: separate;
+  border-spacing: 0 7px;
+}
+
+.info-table td {
+  vertical-align: middle;
+  font-size: 1rem;
+  padding: 5px 6px;
+  border-bottom: 1px solid #e9eef7;
+}
+
+.info-table tr:last-child td {
+  border-bottom: none;
+}
+
+.extra-docs {
+  margin: 16px 0 0 0;
+  font-size: 0.97rem;
+  color: #555;
+  ul { margin: 5px 0 0 0; }
+  li { margin-bottom: 2px; }
+}
+
+.status-badge {
+  font-size: 1.05rem;
+  margin-top: 12px;
+  span {
+    display: inline-block;
+    padding: 4px 13px;
+    border-radius: 14px;
+    margin-left: 8px;
+    font-weight: 600;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+    &.APPROVED { background: #eafaf2; color: #1fa462; }
+    &.REJECTED { background: #fbeaea; color: #d93025; }
+    &.UNDER_REVIEW { background: #eaf4fb; color: #007bff; }
+    &.NEW { background: #f8f9fa; color: #555; }
+    &.PENDING_REVISION, &.RESUBMITTED { background: #fff9e5; color: #8a6d3b; }
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  align-items: center;
+  padding: 0 10px 0 10px;
+}
+
+.loading-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 14px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.text-danger {
+  color: #d93025;
+  text-align: center;
+}
