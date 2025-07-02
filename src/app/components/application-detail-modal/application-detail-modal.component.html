@@ -117,4 +117,10 @@
       <span *ngIf="actionLoading" class="ml-2">Procesando...</span>
     </div>
   </ng-template>
+  <!-- Overlay acción: aprobar/rechazar -->
+<div *ngIf="actionLoading" class="modal-action-overlay">
+  <div class="spinner"></div>
+  <p>Procesando...</p>
+</div>
+
 </p-dialog>

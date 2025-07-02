@@ -17,6 +17,9 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "allowedCommonJsDependencies": [
+                            "js-sha256"
+                        ],
                         "outputPath": "dist/serenity-ng",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -136,4 +139,5 @@
     "cli": {
       "analytics": false
     }
+    
 }
