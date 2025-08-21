@@ -11,9 +11,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
    keycloak.init({
      // Configuration details for Keycloak
      config: {
-       url: 'http://localhost:1234/auth', // URL of the Keycloak server
-       realm: 'test', // Realm to be used in Keycloak
-       clientId: 'frontend' // Client ID for the application in Keycloak
+       url: 'http://localhost:8080/auth', // URL real de tu Keycloak
+        realm: 'UPTC-DEV',
+        clientId: 'frontend-app' // Client ID for the application in Keycloak
      },
      // Options for Keycloak initialization
      initOptions: {

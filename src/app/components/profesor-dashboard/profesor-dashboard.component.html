@@ -1,0 +1,135 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Cargando, por favor espere...</p>
+</div>
+
+<div class="card max-w-screen-lg mx-auto shadow-lg p-6 rounded-2xl" style="max-width: 1100px;">
+  <div class="flex justify-between items-center mb-6">
+    <h4 class="text-xl font-semibold" style="margin-bottom: 0;">
+      Administración de Solicitudes de Certificación
+    </h4>
+    <button pButton type="button" icon="pi pi-plus" label="Radicar solicitud"
+      class="p-button-success p-button-rounded"
+      style="font-weight: 600;"
+      [disabled]="isLoading"
+      >
+    </button>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="grid gap-4 mb-4">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-book"></i></span>
+      <input type="text" pInputText [(ngModel)]="filtroTitulo" (input)="onFiltroChange()" placeholder="Título del libro">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+      <input type="text" pInputText [(ngModel)]="filtroAutor" (input)="onFiltroChange()" placeholder="Nombre del autor">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-barcode"></i></span>
+      <input type="text" pInputText [(ngModel)]="filtroIsbn" (input)="onFiltroChange()" placeholder="ISBN">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-calendar"></i></span>
+      <input type="number" pInputText [(ngModel)]="filtroFechaPublicacionDesde" (input)="onFiltroChange()" placeholder="Año publicación desde" min="1900" max="2100" style="width: 120px;">
+      <span class="p-inputgroup-addon">-</span>
+      <input type="number" pInputText [(ngModel)]="filtroFechaPublicacionHasta" (input)="onFiltroChange()" placeholder="Hasta" min="1900" max="2100" style="width: 120px;">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-clock"></i></span>
+      <input type="date" pInputText [(ngModel)]="filtroFechaRadicadoDesde" (input)="onFiltroChange()" placeholder="Radicado desde">
+      <span class="p-inputgroup-addon">-</span>
+      <input type="date" pInputText [(ngModel)]="filtroFechaRadicadoHasta" (input)="onFiltroChange()" placeholder="Hasta">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-list"></i></span>
+      <select [(ngModel)]="filtroTipo" (change)="onFiltroChange()" class="p-inputtext">
+        <option value="">Todos los tipos</option>
+        <option *ngFor="let tipo of tiposCertificacion" [value]="tipo">{{ tipo }}</option>
+      </select>
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-filter"></i></span>
+      <select [(ngModel)]="filtroEstado" (change)="onFiltroChange()" class="p-inputtext">
+        <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+      </select>
+      <button pButton type="button" icon="pi pi-times" class="p-button-rounded p-button-text" style="margin-left: 8px;" (click)="limpiarFiltros()" title="Limpiar filtros"></button>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="card" style="margin-bottom:0;">
+    <p-table
+      [value]="filteredApplications"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      styleClass="p-datatable-gridlines"
+      [tableStyle]="{ 'min-width': '70rem' }"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} solicitudes"
+      
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Radicado</th>
+          <th>ISBN</th>
+          <th>Título</th>
+          <th>Nombre autor</th>
+          <th>Tipo de certificación</th>
+          <th>Fecha publicación</th>
+          <th>Fecha radicado</th>
+          <th>Estado</th>
+          <th>Comentarios</th>
+          <th>Acción</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-app>
+        <tr>
+          <td>{{ app.id }}</td>
+          <td>{{ app.isbnCode || '-' }}</td>
+          <td>{{ app.bookTitle }}</td>
+          <td>{{ app.authorName || '-' }}</td>
+          <td>{{ app.certificationType }}</td>
+          <td>{{ app.publicationYear || '-' }}</td>
+          <td>{{ app.createdAt | date: 'shortDate' }}</td>
+          <td>
+            <span class="estado-badge" [ngClass]="{
+                'badge-radicada': estadoSimplificado(app.status)==='RADICADA',
+                'badge-proceso': estadoSimplificado(app.status)==='EN_PROCESO',
+                'badge-devuelta': estadoSimplificado(app.status)==='DEVUELTA',
+                'badge-rechazada': estadoSimplificado(app.status)==='RECHAZADA'
+              }">{{ traducirEstado(app.status) }}</span>
+          </td>
+          <td>
+            <span *ngIf="app.adminComments; else sinComentarios">{{ app.adminComments }}</span>
+            <ng-template #sinComentarios>
+              <span class="text-muted">-</span>
+            </ng-template>
+          </td>
+          <td>
+            <button pButton type="button" icon="pi pi-eye"
+              class="p-button-rounded p-button-info"
+              (click)="view(app.id)"
+              [disabled]="isLoading"
+              title="Ver detalles">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="10" class="text-center">No tiene solicitudes.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- MODAL DETALLE -->
+  <app-application-detail-modal
+    *ngIf="selectedApplicationId"
+    [applicationId]="selectedApplicationId"
+    (close)="onModalClose()">
+  </app-application-detail-modal>
+</div>

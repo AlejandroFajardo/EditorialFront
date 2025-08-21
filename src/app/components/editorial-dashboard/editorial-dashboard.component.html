@@ -1,0 +1,87 @@
+<!-- Overlay de carga --> 
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Cargando, por favor espere...</p>
+</div>
+
+<div class="card" style="max-width: 1100px; margin: 0 auto;">
+  <h4 style="text-align: center; margin-bottom: 26px; color: #384a5e; font-weight: bold; letter-spacing: 1px;">
+    Panel de Administración Editorial
+  </h4>
+
+  <!-- Filtros en la misma fila -->
+ <div style="display: flex; justify-content: center;">
+  <div class="p-formgrid grid mb-4 align-items-end" style="max-width: 820px; width: 100%;">
+    <div class="field col-12 md:col-6" style="max-width: 400px;">
+      <label for="filtroEstado"><strong>Filtrar por estado:</strong></label>
+      <div>
+        <select id="filtroEstado" [(ngModel)]="estadoSeleccionado" (change)="onEstadoChange()" class="p-inputtext">
+          <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field col-12 md:col-6" style="max-width: 400px;">
+      <label for="searchText"><strong>Búsqueda general:</strong></label>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+        <input
+          pInputText
+          id="searchText"
+          type="text"
+          placeholder="Buscar por autor, título o certificación"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()"
+          autocomplete="off"
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="card" style="margin-bottom:0;">
+    <p-table
+      *ngIf="filteredApplications.length > 0"
+      [value]="filteredApplications"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      styleClass="p-datatable-gridlines"
+      [tableStyle]="{ 'min-width': '60rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Radicado</th>
+          <th>Autor</th>
+          <th>Tipo de certificación</th>
+          <th>Título del libro</th>
+          <th>Estado</th>
+          <th>Fecha de solicitud</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-app>
+        <tr>
+          <td>{{ app.id }}</td>
+          <td>{{ app.authorName }}</td>
+          <td>{{ app.certificationType }}</td>
+          <td>{{ app.bookTitle }}</td>
+          <td>{{ traducirEstado(app.status) }}</td>
+          <td>{{ app.createdAt | date: 'short' }}</td>
+          <td>
+            <button pButton type="button" label="Ver" (click)="view(app.id)" [disabled]="isLoading"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <ng-template #noData>
+      <p>No hay solicitudes para mostrar.</p>
+    </ng-template>
+  </div>
+
+  <app-application-detail-modal
+    *ngIf="selectedApplicationId"
+    [applicationId]="selectedApplicationId"
+    (close)="onModalClose()">
+  </app-application-detail-modal>
+</div>

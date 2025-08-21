@@ -24,7 +24,7 @@ export const environment = {
 	...defaultEnvironment,
 	production: false,
 	keycloakConfig,
-	apiURL:"http://localhost:8081/",
+	apiURL:"http://localhost:8081",
 	// ========================
 	// Token URL PRODUCCIÓN (comentado)
 	// previousServerTokenURL:'https://auth-dev.uptc.edu.co/auth/realms/UPTC-DEV/protocol/openid-connect/token',

@@ -1,0 +1,45 @@
+.estado-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 18px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.08);
+
+  &.badge-radicada    { background: #3498db; }
+  &.badge-proceso     { background: #f7b924; }
+  &.badge-devuelta    { background: #ff9933; }
+  &.badge-rechazada   { background: #ea3e3e; }
+}
+
+.text-muted {
+  color: #aaa;
+}
+
+.card {
+  background: #f9fafb;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px 0 rgba(43,56,65,0.08);
+  padding: 2rem 1rem;
+}
+
+.p-inputgroup {
+  margin-bottom: 8px;
+  max-width: 370px;
+}
+
+.p-table .p-datatable-tbody > tr > td {
+  vertical-align: middle;
+}
+
+.p-button-success {
+  background-color: #388e3c !important;
+  border: none !important;
+}
+
+.p-button-info {
+  background-color: #1976d2 !important;
+  border: none !important;
+}
+

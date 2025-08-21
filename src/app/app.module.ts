@@ -46,7 +46,10 @@ import { KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService } fro
 import { FormLayoutDemoComponent } from './components/formDemo/formlayoutdemo.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { AuthenticationInterceptor } from 'src/AuthenticationInterceptor';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { EditorialDashboardComponent } from './components/editorial-dashboard/editorial-dashboard.component';
+import { ProfesorDashboardComponent } from './components/profesor-dashboard/profesor-dashboard.component';
+import { CentroAsistenteDashboardComponent } from './components/centro-asistente-dashboard/centro-asistente-dashboard.component';
+import { CentroJefelDashboardComponent } from './components/centro-jefe-dashboard/centro-jefe-dashboard.component';
 import { ApplicationDetailModalComponent } from './components/application-detail-modal/application-detail-modal.component';
 
 
@@ -107,8 +110,11 @@ export function initializeKeycloak(keycloak: KeycloakService): () => Promise<boo
         AppAccessdeniedComponent,
         FormLayoutDemoComponent,
         InicioComponent,
-        AdminDashboardComponent,
-        ApplicationDetailModalComponent
+        EditorialDashboardComponent,
+        ApplicationDetailModalComponent,
+        ProfesorDashboardComponent,
+        CentroAsistenteDashboardComponent,
+        CentroJefelDashboardComponent
     ],
     providers: [
 

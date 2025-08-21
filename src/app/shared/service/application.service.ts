@@ -1,30 +1,56 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ApplicationDTO } from '../application.dto';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.dev';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.dev";
+import { ApplicationDTO } from "../application.dto";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ApplicationService {
+    private baseUrl = `${environment.apiURL}/api/applications`;
 
-  private baseUrl = 'http://localhost:8081/api/applications';
+    constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+    create(dto: ApplicationDTO): Observable<ApplicationDTO> {
+        return this.http.post<ApplicationDTO>(this.baseUrl, dto);
+    }
 
-  create(dto: ApplicationDTO): Observable<ApplicationDTO> {
-    return this.http.post<ApplicationDTO>(this.baseUrl, dto);
-  }
+    getAll(
+        filters: {
+            usuarioId?: number;
+            status?: string;
+            bookTitle?: string;
+            isbnCode?: string;
+            publicationYear?: string | number;
+            [key: string]: any;
+        } = {}
+    ): Observable<ApplicationDTO[]> {
+        let params = new HttpParams();
+        Object.entries(filters).forEach(([k, v]) => {
+            if (v !== undefined && v !== null && v !== "")
+                params = params.set(k, v.toString());
+        });
+        return this.http.get<ApplicationDTO[]>(this.baseUrl, { params });
+    }
 
-  list(): Observable<ApplicationDTO[]> {
-    return this.http.get<ApplicationDTO[]>(this.baseUrl);
-  }
+    /**
+     * Obtiene las aplicaciones del usuario actual.
+     * Si se pasa un email, lo envía como parámetro para el backend (SOLO EN DESARROLLO).
+     */
+    getMyApplications(): Observable<ApplicationDTO[]> {
+        // No envía ningún parámetro, siempre.
+        return this.http.get<ApplicationDTO[]>(`${this.baseUrl}/mine`);
+    }
 
-  updateStatus(id: number, status: string, comments?: string): Observable<ApplicationDTO> {
-    const url = `${this.baseUrl}/${id}/status?status=${status}`;
-    return this.http.put<ApplicationDTO>(url, comments);
-  }
+    getById(id: number): Observable<ApplicationDTO> {
+        return this.http.get<ApplicationDTO>(`${this.baseUrl}/${id}`);
+    }
 
-  getAll() {
-  return this.http.get<ApplicationDTO[]>(`${environment.apiURL}/api/applications`);
-  }
+    updateStatus(
+        id: number,
+        status: string,
+        comments?: string
+    ): Observable<ApplicationDTO> {
+        const url = `${this.baseUrl}/${id}/status`;
+        return this.http.put<ApplicationDTO>(url, { status, comments });
+    }
 }
